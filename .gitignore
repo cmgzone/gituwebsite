@@ -1,0 +1,14 @@
+.hermes/
+.gitu/
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+
+# Local artifacts
+buildN.txt
+vite-*.log
+vite-*.err.log
+*.err.log
+*.log

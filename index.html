@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050807" />
+    <meta name="robots" content="index, follow" />
+
+    <title>Gitu — Autonomous AI Coding Agent</title>
+    <meta
+      name="description"
+      content="Gitu understands real codebases, plans and delegates work, then builds, tests, repairs, debugs and verifies software tasks to completion."
+    />
+    <link rel="canonical" id="canonical-url" />
+    <script>
+      const canonicalLink = document.getElementById('canonical-url')
+      if (canonicalLink) {
+        canonicalLink.setAttribute(
+          'href',
+          new URL(window.location.pathname, window.location.origin).href,
+        )
+      }
+    </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Gitu" />
+    <meta property="og:title" content="Gitu — Autonomous AI Coding Agent" />
+    <meta
+      property="og:description"
+      content="Gitu plans, builds, tests, repairs and verifies software tasks across real codebases."
+    />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Gitu — Autonomous AI Coding Agent" />
+    <meta
+      name="twitter:description"
+      content="Gitu plans, builds, tests, repairs and verifies software tasks across real codebases."
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Gitu",
+        "applicationCategory": "DeveloperApplication",
+        "description": "Gitu plans, builds, tests, repairs and verifies software tasks across real codebases."
+      }
+    </script>
+    <style>
+      html { background: #050807; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>Gitu is an autonomous AI coding agent built to complete and verify real software work. Enable JavaScript to view the interactive experience.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

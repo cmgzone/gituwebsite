@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Gitu — Autonomous AI Coding Agent",
+  "short_name": "Gitu",
+  "description": "Gitu plans, builds, tests, repairs and verifies software tasks across real codebases.",
+  "lang": "en",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050807",
+  "theme_color": "#050807",
+  "categories": ["developer-tools", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
