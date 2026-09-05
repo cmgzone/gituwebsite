@@ -15,8 +15,8 @@ export function createDatabasePool(): pg.Pool {
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: 5_000,
     ssl:
-      process.env.NODE_ENV === 'production'
+      process.env.DATABASE_SSL === 'true'
         ? { rejectUnauthorized: true }
-        : undefined,
+        : false,
   })
 }
