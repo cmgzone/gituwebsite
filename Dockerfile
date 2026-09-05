@@ -19,6 +19,6 @@ RUN npm ci
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/server ./server
 
-EXPOSE 8787
+EXPOSE 3000
 
 CMD ["npm", "run", "server"]
