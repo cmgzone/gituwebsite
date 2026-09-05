@@ -135,4 +135,44 @@ describe('ProtectedPlatform client and admin routes', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Enter a prompt before submitting.')
     expect(fetchMock.mock.calls.map(([url]) => String(url))).not.toContain('/api/chat/completions')
   })
+
+  it('submits login credentials to the authentication endpoint', async () => {
+    window.history.pushState({}, '', '/login')
+    fetchMock.mockResolvedValueOnce(jsonResponse({ user: { id: clientUser.id, email: clientUser.email } }))
+
+    render(<ProtectedPlatform />)
+
+    fireEvent.change(screen.getByRole('textbox', { name: 'Email address' }), {
+      target: { value: clientUser.email },
+    })
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'a-valid-password' },
+    })
+    fireEvent.submit(screen.getByRole('button', { name: /sign in/i }).closest('form') as HTMLFormElement)
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith('/api/auth/login', expect.anything())
+    })
+
+    const loginCall = fetchMock.mock.calls.find(([url]) => String(url) === '/api/auth/login')
+    const requestInit = loginCall?.[1] as RequestInit
+    expect(JSON.parse(String(requestInit.body))).toEqual({
+      email: clientUser.email,
+      password: 'a-valid-password',
+    })
+  })
+
+  it('keeps an actionable error visible when dashboard bootstrap fails', async () => {
+    window.history.pushState({}, '', '/app')
+    fetchMock.mockImplementation((url) => {
+      if (String(url) === '/api/auth/me') return Promise.resolve(jsonResponse({ error: 'request_failed' }, 500))
+      if (String(url) === '/api/keys') return Promise.resolve(jsonResponse({ keys: [] }))
+      return Promise.reject(new Error(`Unexpected request: ${String(url)}`))
+    })
+
+    render(<ProtectedPlatform />)
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Something went wrong. Please try again.')
+    expect(screen.getByRole('main')).toBeInTheDocument()
+  })
 })

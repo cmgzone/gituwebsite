@@ -1887,6 +1887,9 @@ function Dashboard({ path }: { path: ProtectedDashboardPath }) {
   const [isMutating, setIsMutating] = useState(false)
 
   const loadDashboard = useCallback(async () => {
+    setIsLoading(true)
+    setIsForbidden(false)
+    setError('')
     try {
       const [{ user: currentUser }, { keys: currentKeys }] = await Promise.all([
         requestJson<{ user: AuthUser }>('/api/auth/me'),
@@ -1999,7 +2002,34 @@ function Dashboard({ path }: { path: ProtectedDashboardPath }) {
   if (isLoading) {
     return (
       <main className="platform-shell platform-shell--loading">
-        <div className="loading-mark" aria-label="Loading dashboard" role="status">G</div>
+        <div className="loading-mark" aria-label="Loading dashboard" role="status">
+          <span aria-hidden="true">G</span>
+          <span className="sr-only">Loading your workspace…</span>
+        </div>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main className="platform-shell platform-shell--dashboard">
+        <div className="platform-noise" aria-hidden="true" />
+        <section className="dashboard-hero" aria-labelledby="dashboard-error-title">
+          <div>
+            <p className="platform-kicker">Workspace unavailable / 02</p>
+            <h1 id="dashboard-error-title">We couldn’t load your workspace.</h1>
+            <p className="platform-lede">Your sign-in is still available. Try loading the workspace again, or return to sign in.</p>
+            <div className="token-actions">
+              <button className="platform-button platform-button--primary" type="button" onClick={() => void loadDashboard()}>
+                Try again
+              </button>
+              <a className="platform-button platform-button--quiet" href="/login">
+                Return to sign in
+              </a>
+            </div>
+          </div>
+        </section>
+        <p className="form-alert form-alert--error dashboard-alert" role="alert">{error}</p>
       </main>
     )
   }
