@@ -1886,7 +1886,7 @@ function Dashboard({ path }: { path: ProtectedDashboardPath }) {
   const [isForbidden, setIsForbidden] = useState(false)
   const [isMutating, setIsMutating] = useState(false)
 
-  async function loadDashboard() {
+  const loadDashboard = useCallback(async () => {
     try {
       const [{ user: currentUser }, { keys: currentKeys }] = await Promise.all([
         requestJson<{ user: AuthUser }>('/api/auth/me'),
@@ -1910,11 +1910,11 @@ function Dashboard({ path }: { path: ProtectedDashboardPath }) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [path])
 
   useEffect(() => {
     void loadDashboard()
-  }, [])
+  }, [loadDashboard])
 
   async function handleCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
